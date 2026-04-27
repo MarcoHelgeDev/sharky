@@ -6,5 +6,10 @@ class Cloud extends MovableObject {
   constructor() {
     super().loadImg("img/1.png");
     this.x = Math.random() * 500;
+    this.animate();
+  }
+
+  animate() {
+    this.moveLeft();
   }
 }
