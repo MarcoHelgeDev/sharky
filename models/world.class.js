@@ -4,24 +4,9 @@ class World {
   keyboard;
   camera_x = 0;
   character = new Character();
-  enemies = [new Jellyfish(), new Jellyfish(), new Jellyfish()];
-  clouds = [new Cloud()];
-  backgroundObject = [
-    new BackgroundObject("img/3. Background/Layers/5. Water/D2.png", -720),
-    new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D2.png", -720),
-    new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D2.png", -720),
-    new BackgroundObject("img/3. Background/Layers/2. Floor/D2.png", -720),
-
-    new BackgroundObject("img/3. Background/Layers/5. Water/D1.png", 0),
-    new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D1.png", 0),
-    new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D1.png", 0),
-    new BackgroundObject("img/3. Background/Layers/2. Floor/D1.png", 0),
-
-    new BackgroundObject("img/3. Background/Layers/5. Water/D2.png", 720),
-    new BackgroundObject("img/3. Background/Layers/4.Fondo 2/D2.png", 720),
-    new BackgroundObject("img/3. Background/Layers/3.Fondo 1/D2.png", 720),
-    new BackgroundObject("img/3. Background/Layers/2. Floor/D2.png", 720),
-  ];
+  enemies = level1.enemies;
+  clouds = level1.clouds;
+  backgroundObjects = level1.backgroundObjects;
 
   constructor(canvas, keyboard) {
     this.canvas = canvas;
@@ -37,7 +22,7 @@ class World {
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
-    this.addObjectsToMap(this.backgroundObject);
+    this.addObjectsToMap(this.backgroundObjects);
 
     this.addToMap(this.character);
     this.addObjectsToMap(this.clouds);
