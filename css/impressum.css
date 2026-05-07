@@ -1,0 +1,113 @@
+.impressum-page {
+  min-height: 100vh;
+  overflow-y: auto;
+  color: white;
+  background:
+    radial-gradient(
+      circle at 18% 12%,
+      rgba(93, 221, 255, 0.32),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 88% 22%,
+      rgba(42, 174, 210, 0.24),
+      transparent 28%
+    ),
+    linear-gradient(180deg, #0b80b8 0%, #063f68 52%, #031c34 100%);
+}
+
+.impressum-page::before,
+.impressum-page::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.impressum-page::before {
+  width: 120px;
+  height: 120px;
+  left: 8%;
+  bottom: 12%;
+  box-shadow:
+    140px -250px 0 -42px rgba(255, 255, 255, 0.13),
+    430px -70px 0 -54px rgba(255, 255, 255, 0.1),
+    760px -310px 0 -46px rgba(255, 255, 255, 0.11);
+}
+
+.impressum-page::after {
+  width: 170px;
+  height: 170px;
+  right: 8%;
+  top: 12%;
+  box-shadow:
+    -210px 270px 0 -62px rgba(255, 255, 255, 0.11),
+    -560px 110px 0 -70px rgba(255, 255, 255, 0.09),
+    -820px 360px 0 -58px rgba(255, 255, 255, 0.08);
+}
+
+.impressum-wrapper {
+  position: relative;
+  z-index: 1;
+  width: min(840px, calc(100% - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 48px 0;
+  display: flex;
+  align-items: center;
+}
+
+.impressum-card {
+  width: 100%;
+  padding: 36px 38px;
+  border: 3px solid rgba(255, 255, 255, 0.32);
+  border-radius: 30px;
+  background:
+    radial-gradient(
+      circle at 18% 0%,
+      rgba(92, 220, 255, 0.18),
+      transparent 36%
+    ),
+    rgba(4, 42, 70, 0.86);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.38),
+    inset 0 0 0 2px rgba(9, 178, 220, 0.2);
+}
+
+.impressum-card h1 {
+  margin: 18px 0 22px;
+  font-size: 34px;
+  line-height: 1.35;
+  color: #ffdf4d;
+  text-align: left;
+  text-shadow: 2px 2px 0 #063450;
+}
+
+.impressum-card h2 {
+  margin: 28px 0 10px;
+  color: #ffdf4d;
+  font-size: 23px;
+  line-height: 1.35;
+  text-shadow: 2px 2px 0 #063450;
+}
+
+.impressum-card p {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+.notice {
+  padding: 14px 16px;
+  margin-bottom: 4px;
+  border-left: 5px solid #ffdf4d;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-size: 18px;
+}

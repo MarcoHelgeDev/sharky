@@ -1,8 +1,12 @@
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-canvas {
-  background-color: black;
+@import url("./css/base.css");
+@import url("./css/layout.css");
+@import url("./css/buttons.css");
+@import url("./css/game.css");
+@import url("./css/dialogs.css");
+@import url("./css/impressum.css");
+@import url("./css/mobile.css");
+@import url("./css/fullscreen.css");
+
+.d-none {
+  display: none;
 }

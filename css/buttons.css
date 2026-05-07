@@ -1,0 +1,91 @@
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 13px 30px;
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: bold;
+  color: #063450;
+  background: linear-gradient(180deg, #fff176, #ffcc33);
+  cursor: pointer;
+  box-shadow: 0 7px 0 #d99416;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    filter 120ms ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 9px 0 #d99416;
+}
+
+button:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 #d99416;
+}
+
+.help-button,
+.home-button {
+  background: linear-gradient(180deg, #ffffff, #c8f7ff);
+  box-shadow: 0 7px 0 #52a9c4;
+}
+
+.mute-button {
+  position: absolute;
+  z-index: 20;
+  right: 14px;
+  bottom: 14px;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 5px 0 #52a9c4;
+}
+
+.fullscreen-button {
+  display: none;
+}
+
+.mute-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #52a9c4;
+}
+
+.mute-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #52a9c4;
+}
+
+.impressum-link,
+.game-footer a,
+.back-link {
+  color: #b8f7ff;
+  text-decoration: none;
+}
+
+.impressum-link:hover,
+.game-footer a:hover,
+.back-link:hover,
+.orientation-impressum-link:hover {
+  text-decoration: underline;
+}
+
+.mobile-menu-impressum {
+  display: none;
+  margin-top: 4px;
+  font-size: 17px;
+}
+
+.orientation-impressum-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: #b8f7ff;
+  font-size: 17px;
+  text-decoration: none;
+}

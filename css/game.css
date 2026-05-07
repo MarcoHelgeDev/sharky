@@ -1,0 +1,99 @@
+.game-box {
+  position: relative;
+  width: 720px;
+  height: 480px;
+  max-width: 100vw;
+  max-height: calc(100vh - 118px);
+  overflow: hidden;
+  border: 5px solid rgba(255, 255, 255, 0.86);
+  border-radius: 22px;
+  background: #001527;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 3px rgba(9, 178, 220, 0.35);
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-color: black;
+}
+
+.start-screen,
+.end-screen {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 28px;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(86, 224, 255, 0.12),
+      transparent 55%
+    ),
+    linear-gradient(rgba(0, 67, 106, 0.88), rgba(0, 31, 56, 0.92));
+}
+
+.start-card,
+.end-card {
+  width: 100%;
+  height: 100%;
+  padding: 28px 38px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.start-card {
+  transform: translateY(-42px);
+}
+
+.hero-shark {
+  width: 185px;
+  height: auto;
+  margin-bottom: -24px;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.34));
+}
+
+.tagline {
+  margin: 0;
+  color: #9ff3ff;
+  font-size: 17px;
+}
+
+.start-screen h2,
+.end-screen h2 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.35;
+  color: #ffdf4d;
+  text-shadow: 2px 2px 0 #063450;
+}
+
+.intro-text,
+.end-text {
+  max-width: 510px;
+  margin: 0 auto 8px;
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.menu-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+  margin-bottom: 0;
+}

@@ -1,0 +1,79 @@
+class Jellyfish extends MovableObject {
+  height = 90;
+  width = 90;
+  speed = 1.2;
+  topBorder = 40;
+  bottomBorder = 350;
+  moveDirection = 1;
+  isKilled = false;
+  removeFromWorld = false;
+  deadCounter = 0;
+  offset = { top: 12, right: 18, bottom: 14, left: 18 };
+
+  IMAGES_SWIMMING = [
+    "img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png",
+    "img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png",
+    "img/2.Enemy/2 Jelly fish/Regular damage/Lila 3.png",
+    "img/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png",
+  ];
+
+  IMAGES_DEAD = [
+    "img/2.Enemy/2 Jelly fish/Dead/Lila/L1.png",
+    "img/2.Enemy/2 Jelly fish/Dead/Lila/L2.png",
+    "img/2.Enemy/2 Jelly fish/Dead/Lila/L3.png",
+    "img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png",
+  ];
+
+  constructor(x, y) {
+    super().loadImg(this.IMAGES_SWIMMING[0]);
+    this.x = x;
+    this.y = y;
+    this.loadImages(this.IMAGES_SWIMMING);
+    this.loadImages(this.IMAGES_DEAD);
+    this.animate();
+  }
+
+  animate() {
+    setInterval(() => {
+      this.moveUpAndDown();
+    }, 1000 / 60);
+
+    setInterval(() => {
+      this.playJellyfishAnimation();
+    }, 200);
+  }
+
+  moveUpAndDown() {
+    if (this.isKilled) return;
+    this.y += this.speed * this.moveDirection;
+    this.changeDirectionAtBorder();
+  }
+
+  changeDirectionAtBorder() {
+    if (this.y > this.bottomBorder || this.y < this.topBorder) {
+      this.moveDirection *= -1;
+    }
+  }
+
+  playJellyfishAnimation() {
+    if (this.isKilled) {
+      this.playDeadAnimation();
+    } else {
+      this.playAnimation(this.IMAGES_SWIMMING);
+    }
+  }
+
+  playDeadAnimation() {
+    this.playAnimation(this.IMAGES_DEAD);
+    this.y -= 3;
+    this.deadCounter++;
+    if (this.deadCounter > 12) {
+      this.removeFromWorld = true;
+    }
+  }
+
+  kill() {
+    this.isKilled = true;
+    this.currentImage = 0;
+  }
+}

@@ -1,31 +1,173 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="models/drawable-object.class.js" defer></script>
-    <script src="models/movable-object.class.js" defer></script>
-    <script src="models/character.class.js" defer></script>
-    <script src="models/jellyfish.class.js" defer></script>
-    <script src="models/cloud.class.js" defer></script>
-
-    <script src="models/status-bar.class.js" defer></script>
-
-    <script src="models/world.class.js" defer></script>
-    <script src="models/background-object.class.js" defer></script>
-    <script src="models/keyboard.class.js" defer></script>
-    <script src="models/level.class.js" defer></script>
-    <script src="models/throwable-object.class.js" defer></script>
-    <script src="models/endboss.class.js" defer></script>
-    <script src="levels/level1.js" defer></script>
-
-    <script src="js/game.js" defer></script>
 
     <title>Sharky</title>
+
+    <link rel="icon" type="image/png" href="img/1.Sharkie/3.Swim/1.png" />
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="classes/drawable-object.class.js" defer></script>
+    <script src="classes/movable-object.class.js" defer></script>
+    <script src="classes/character.class.js" defer></script>
+    <script src="classes/jellyfish.class.js" defer></script>
+    <script src="classes/pufferfish.class.js" defer></script>
+    <script src="classes/cloud.class.js" defer></script>
+    <script src="classes/status-bar.class.js" defer></script>
+    <script src="classes/background-object.class.js" defer></script>
+    <script src="classes/light-object.class.js" defer></script>
+    <script src="classes/keyboard.class.js" defer></script>
+    <script src="classes/level.class.js" defer></script>
+    <script src="classes/throwable-object.class.js" defer></script>
+    <script src="classes/boss-bubble.class.js" defer></script>
+    <script src="classes/endboss.class.js" defer></script>
+    <script src="classes/coin.class.js" defer></script>
+    <script src="classes/poison-bottle.class.js" defer></script>
+    <script src="classes/audio-manager.class.js" defer></script>
+    <script src="levels/level1.js" defer></script>
+    <script src="classes/world.class.js" defer></script>
+    <script src="script.js" defer></script>
   </head>
-  <body>
-    <h1>Sharky</h1>
-    <canvas class="canvas-container" width="720" height="480"> </canvas>
+
+  <body class="game-page">
+    <div class="orientation-warning">
+      <div class="orientation-card">
+        <div class="phone-icon">📱</div>
+        <h2>Gerät drehen</h2>
+        <p>Bitte drehe dein Gerät ins Querformat, um Sharky zu spielen.</p>
+        <a class="orientation-impressum-link" href="impressum.html">
+          Impressum
+        </a>
+      </div>
+    </div>
+
+    <main class="game-wrapper">
+      <header class="page-header">
+        <p class="eyebrow">Developer Akademie Projekt</p>
+        <h1>Sharky</h1>
+      </header>
+
+      <section class="game-box">
+        <canvas class="canvas-container" width="720" height="480"></canvas>
+
+        <button class="mute-button" aria-label="Sound an oder aus">🔊</button>
+        <button class="fullscreen-button" aria-label="Vollbild">⛶</button>
+
+        <div class="start-screen">
+          <div class="start-card">
+            <img
+              class="hero-shark"
+              src="img/1.Sharkie/3.Swim/1.png"
+              alt="Sharky"
+            />
+
+            <p class="tagline">
+              Tauche ab, weich aus und kämpfe dich durch das Riff.
+            </p>
+
+            <h2>Sharky Abenteuer</h2>
+
+            <p class="intro-text">
+              Sammle Coins und Poison-Flaschen. Sobald die Poison-Leiste voll
+              ist, schießt Sharky dauerhaft starke Poison-Bubbles. Nur damit
+              kannst du den Endboss besiegen.
+            </p>
+
+            <div class="menu-buttons">
+              <button class="start-button">Spiel starten</button>
+              <button class="help-button">Anleitung</button>
+            </div>
+
+            <a
+              class="impressum-link mobile-menu-impressum"
+              href="impressum.html"
+            >
+              Impressum
+            </a>
+          </div>
+        </div>
+
+        <div class="end-screen d-none">
+          <div class="end-card">
+            <h2 class="end-title">Game Over</h2>
+            <p class="end-text">
+              Sammle Poison, weich den Boss-Bubbles aus und versuch es nochmal.
+            </p>
+
+            <div class="menu-buttons">
+              <button class="restart-button">Neu starten</button>
+              <button class="home-button">Menü</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mobile-controls">
+          <div class="mobile-left-controls">
+            <button class="mobile-button" data-key="LEFT">←</button>
+            <button class="mobile-button" data-key="UP">↑</button>
+            <button class="mobile-button" data-key="RIGHT">→</button>
+          </div>
+
+          <div class="mobile-right-controls">
+            <button class="mobile-button attack-button" data-key="D">
+              Blase
+            </button>
+            <button class="mobile-button attack-button" data-key="F">
+              Flosse
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="game-footer">
+        <a href="impressum.html">Impressum</a>
+      </footer>
+
+      <dialog class="help-dialog">
+        <div class="dialog-content">
+          <button class="close-dialog-button" aria-label="Dialog schließen">
+            ×
+          </button>
+
+          <p class="eyebrow">Steuerung</p>
+          <h2>Anleitung</h2>
+
+          <p>
+            Hilf Sharky durch die Unterwasserwelt. Sammle Coins und Poison,
+            weich Gegnern aus und besiege den Endboss mit Poison-Bubbles.
+          </p>
+
+          <div class="help-grid">
+            <div>
+              <b>← / →</b>
+              <span>Sharky bewegen</span>
+            </div>
+
+            <div>
+              <b>Leertaste / ↑</b>
+              <span>Nach oben schwimmen</span>
+            </div>
+
+            <div>
+              <b>D</b>
+              <span>Blase schießen</span>
+            </div>
+
+            <div>
+              <b>F</b>
+              <span>Flossenschlag</span>
+            </div>
+          </div>
+
+          <p>
+            Normale Blasen und der Flossenschlag besiegen normale Gegner. Wenn
+            die Poison-Leiste voll ist, schießt Sharky dauerhaft Poison-Bubbles.
+            Nur diese machen dem Endboss Schaden.
+          </p>
+        </div>
+      </dialog>
+    </main>
   </body>
 </html>

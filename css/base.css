@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "Pixelify Sans";
+  src: url("../fonts/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Press Start 2P";
+  src: url("../fonts/Press_Start_2P/PressStart2P-Regular.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: "Pixelify Sans", "Trebuchet MS", Arial, sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.start-screen h2,
+.end-screen h2,
+.dialog-content h2,
+.orientation-card h2,
+.impressum-card h1 {
+  font-family: "Press Start 2P", "Pixelify Sans", Arial, sans-serif;
+}
+
+.d-none {
+  display: none;
+}
