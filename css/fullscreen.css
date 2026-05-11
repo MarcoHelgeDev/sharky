@@ -16,7 +16,12 @@ body.fake-fullscreen .game-box canvas {
   height: 100%;
 }
 
-body.fake-fullscreen .game-box.is-playing .mobile-controls {
+body.fake-fullscreen
+  .game-box.is-playing.touch-controls-visible:not(.touch-controls-hidden)
+  .mobile-controls,
+body.fake-fullscreen
+  .game-box.is-playing:not(.touch-controls-hidden)
+  .mobile-controls {
   position: absolute;
   z-index: 30;
   inset: auto 0 0 0;
@@ -25,6 +30,12 @@ body.fake-fullscreen .game-box.is-playing .mobile-controls {
   align-items: flex-end;
   padding: 0 18px 14px;
   pointer-events: none;
+}
+
+body.fake-fullscreen
+  .game-box.is-playing.touch-controls-hidden
+  .mobile-controls {
+  display: none;
 }
 
 body.fake-fullscreen .mobile-left-controls,
@@ -57,7 +68,7 @@ body.fake-fullscreen .mute-button {
   width: 42px;
   height: 42px;
   font-size: 22px;
-  transform: translateX(-70px);
+  transform: translateX(-118px);
 }
 
 body.fake-fullscreen .fullscreen-button {
@@ -76,17 +87,81 @@ body.fake-fullscreen .fullscreen-button {
   font-size: 22px;
   background: rgba(255, 255, 255, 0.86);
   box-shadow: 0 5px 0 #52a9c4;
-  transform: translateX(28px);
+  transform: translateX(-20px);
+}
+
+body.fake-fullscreen .touch-toggle-button {
+  position: absolute;
+  z-index: 31;
+  top: 28px;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 5px 0 #52a9c4;
+  transform: translateX(78px);
 }
 
 body.fake-fullscreen .game-box.is-playing .mute-button {
   top: auto;
   bottom: 14px;
-  transform: translateX(-70px);
+  transform: translateX(-118px);
 }
 
 body.fake-fullscreen .game-box.is-playing .fullscreen-button {
   top: auto;
   bottom: 14px;
-  transform: translateX(28px);
+  transform: translateX(-20px);
+}
+
+body.fake-fullscreen .game-box.is-playing .touch-toggle-button {
+  top: auto;
+  bottom: 14px;
+  transform: translateX(78px);
+}
+
+/* Center control buttons in fake fullscreen mobile landscape */
+@media (max-width: 1024px) and (orientation: landscape) {
+  body.fake-fullscreen .game-box.is-playing .mute-button {
+    left: calc(50% - 79px);
+    right: auto;
+    top: auto;
+    bottom: 14px;
+    transform: none;
+  }
+
+  body.fake-fullscreen .game-box.is-playing .fullscreen-button {
+    left: calc(50% - 21px);
+    right: auto;
+    top: auto;
+    bottom: 14px;
+    transform: none;
+  }
+
+  body.fake-fullscreen .game-box.is-playing .touch-toggle-button {
+    left: calc(50% + 37px);
+    right: auto;
+    top: auto;
+    bottom: 14px;
+    transform: none;
+  }
+
+  body.fake-fullscreen .game-box.is-playing .mute-button:hover,
+  body.fake-fullscreen .game-box.is-playing .fullscreen-button:hover,
+  body.fake-fullscreen .game-box.is-playing .touch-toggle-button:hover {
+    transform: none;
+  }
+
+  body.fake-fullscreen .game-box.is-playing .mute-button:active,
+  body.fake-fullscreen .game-box.is-playing .fullscreen-button:active,
+  body.fake-fullscreen .game-box.is-playing .touch-toggle-button:active {
+    transform: translateY(2px);
+  }
 }

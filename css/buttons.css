@@ -32,15 +32,14 @@ button:active {
   box-shadow: 0 7px 0 #52a9c4;
 }
 
-.mute-button {
+.mute-button,
+.fullscreen-button,
+.touch-toggle-button {
   position: absolute;
   z-index: 20;
-  right: 14px;
-  bottom: 14px;
   width: 46px;
   height: 46px;
   padding: 0;
-  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
@@ -48,18 +47,79 @@ button:active {
   box-shadow: 0 5px 0 #52a9c4;
 }
 
-.fullscreen-button {
+.mute-button {
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+}
+
+.fullscreen-button,
+.touch-toggle-button {
   display: none;
 }
 
-.mute-button:hover {
-  transform: translateY(-2px);
+.touch-toggle-button {
+  right: 74px;
+  bottom: 14px;
+}
+
+body.touch-device .game-box.is-playing .touch-toggle-button,
+.game-box.is-playing.touch-controls-visible .touch-toggle-button {
+  display: flex;
+}
+
+body.touch-device .game-box.is-playing .mute-button,
+.game-box.is-playing.touch-controls-visible .mute-button {
+  left: calc(50% - 79px);
+  right: auto;
+  bottom: 14px;
+  transform: none;
+}
+
+body.touch-device .game-box.is-playing .fullscreen-button,
+.game-box.is-playing.touch-controls-visible .fullscreen-button {
+  left: calc(50% - 21px);
+  right: auto;
+  bottom: 14px;
+  transform: none;
+}
+
+body.touch-device .game-box.is-playing .touch-toggle-button,
+.game-box.is-playing.touch-controls-visible .touch-toggle-button {
+  left: calc(50% + 37px);
+  right: auto;
+  bottom: 14px;
+  transform: none;
+}
+
+.mute-button:hover,
+.fullscreen-button:hover,
+.touch-toggle-button:hover {
   box-shadow: 0 7px 0 #52a9c4;
 }
 
-.mute-button:active {
-  transform: translateY(2px);
+.mute-button:active,
+.fullscreen-button:active,
+.touch-toggle-button:active {
   box-shadow: 0 3px 0 #52a9c4;
+}
+
+body.touch-device .game-box.is-playing .mute-button:hover,
+body.touch-device .game-box.is-playing .fullscreen-button:hover,
+body.touch-device .game-box.is-playing .touch-toggle-button:hover,
+.game-box.is-playing.touch-controls-visible .mute-button:hover,
+.game-box.is-playing.touch-controls-visible .fullscreen-button:hover,
+.game-box.is-playing.touch-controls-visible .touch-toggle-button:hover {
+  transform: none;
+}
+
+body.touch-device .game-box.is-playing .mute-button:active,
+body.touch-device .game-box.is-playing .fullscreen-button:active,
+body.touch-device .game-box.is-playing .touch-toggle-button:active,
+.game-box.is-playing.touch-controls-visible .mute-button:active,
+.game-box.is-playing.touch-controls-visible .fullscreen-button:active,
+.game-box.is-playing.touch-controls-visible .touch-toggle-button:active {
+  transform: translateY(2px);
 }
 
 .impressum-link,

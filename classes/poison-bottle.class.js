@@ -1,3 +1,8 @@
+/**
+ * Represents a poison bottle that can be collected by the character.
+ * @class
+ * @extends MovableObject
+ */
 class PoisonBottle extends MovableObject {
   height = 55;
   width = 45;
@@ -14,6 +19,11 @@ class PoisonBottle extends MovableObject {
     "img/4. Marcadores/Posión/Animada/8.png",
   ];
 
+  /**
+   * Creates a new poison bottle.
+   * @param {number} x - The x position of the poison bottle.
+   * @param {number} y - The y position of the poison bottle.
+   */
   constructor(x, y) {
     super().loadImg(this.IMAGES[0]);
     this.x = x;
@@ -22,6 +32,9 @@ class PoisonBottle extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the poison bottle animation.
+   */
   animate() {
     setInterval(() => {
       this.playAnimation(this.IMAGES);

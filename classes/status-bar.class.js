@@ -1,3 +1,8 @@
+/**
+ * Represents a status bar for life, coins or poison.
+ * @class
+ * @extends DrawableObject
+ */
 class Statusbar extends DrawableObject {
   percentage = 100;
   kind = "life";
@@ -29,6 +34,12 @@ class Statusbar extends DrawableObject {
     "img/4. Marcadores/green/poisoned bubbles/0_ copia 2.png",
   ];
 
+  /**
+   * Creates a new status bar.
+   * @param {string} kind - The type of the status bar.
+   * @param {number} x - The x position of the status bar.
+   * @param {number} y - The y position of the status bar.
+   */
   constructor(kind, x, y) {
     super();
     this.kind = kind;
@@ -40,28 +51,47 @@ class Statusbar extends DrawableObject {
     this.setPercentage(this.getStartPercentage());
   }
 
+  /**
+   * Loads the images for the current status bar type.
+   */
   loadImagesForKind() {
     this.images = this.getImagesForKind();
     this.loadImages(this.images);
   }
 
+  /**
+   * Returns the correct image array for the status bar type.
+   * @returns {string[]} The image paths for the status bar.
+   */
   getImagesForKind() {
     if (this.kind == "coin") return this.COIN_IMAGES;
     if (this.kind == "poison") return this.POISON_IMAGES;
     return this.LIFE_IMAGES;
   }
 
+  /**
+   * Returns the start percentage for the status bar.
+   * @returns {number} The start percentage.
+   */
   getStartPercentage() {
     if (this.kind == "life") return 100;
     return 0;
   }
 
+  /**
+   * Sets the percentage and updates the status bar image.
+   * @param {number} percentage - The new percentage value.
+   */
   setPercentage(percentage) {
     this.percentage = percentage;
     let path = this.images[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
+  /**
+   * Returns the image index for the current percentage.
+   * @returns {number} The image index.
+   */
   resolveImageIndex() {
     if (this.percentage >= 100) return 0;
     if (this.percentage >= 80) return 1;

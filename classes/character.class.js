@@ -1,3 +1,8 @@
+/**
+ * Represents Sharky, the playable character.
+ * @class
+ * @extends MovableObject
+ */
 class Character extends MovableObject {
   height = 280;
   width = 220;
@@ -108,6 +113,9 @@ class Character extends MovableObject {
     "img/1.Sharkie/5.Hurt/1.Poisoned/5.png",
   ];
 
+  /**
+   * Creates the character and starts gravity and animation.
+   */
   constructor() {
     super().loadImg("img/1.Sharkie/1.IDLE/1.png");
     this.loadAllImages();
@@ -115,6 +123,9 @@ class Character extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Loads all character animation images.
+   */
   loadAllImages() {
     this.loadImages(this.IMAGES_IDLE);
     this.loadImages(this.IMAGES_LONG_IDLE);
@@ -125,6 +136,9 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_HURT);
   }
 
+  /**
+   * Starts the movement and animation intervals.
+   */
   animate() {
     setInterval(() => {
       this.moveCharacter();
@@ -136,6 +150,9 @@ class Character extends MovableObject {
     }, 100);
   }
 
+  /**
+   * Handles the character movement and attacks.
+   */
   moveCharacter() {
     if (this.isDead()) return;
     this.moveRightByKeyboard();
@@ -145,6 +162,9 @@ class Character extends MovableObject {
     this.resetFlap();
   }
 
+  /**
+   * Moves the character to the right.
+   */
   moveRightByKeyboard() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
@@ -153,6 +173,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Moves the character to the left.
+   */
   moveLeftByKeyboard() {
     if (this.world.keyboard.LEFT && this.x > -600) {
       this.moveLeft();
@@ -161,29 +184,45 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Lets the character swim upwards by keyboard input.
+   */
   flapByKeyboard() {
     if ((this.world.keyboard.SPACE || this.world.keyboard.UP) && this.canFlap) {
       this.flap();
     }
   }
 
+  /**
+   * Starts the fin slap attack by keyboard input.
+   */
   finSlapByKeyboard() {
     if (this.world.keyboard.F && this.canUseFinSlap()) {
       this.startFinSlap();
     }
   }
 
+  /**
+   * Allows the next flap when the key is released.
+   */
   resetFlap() {
     if (!this.world.keyboard.SPACE && !this.world.keyboard.UP) {
       this.canFlap = true;
     }
   }
 
+  /**
+   * Checks if the fin slap attack can be used.
+   * @returns {boolean} True if the fin slap can be used.
+   */
   canUseFinSlap() {
     let timePassed = new Date().getTime() - this.lastFinSlap;
     return timePassed > this.finSlapCooldown && this.attackAnimation == "";
   }
 
+  /**
+   * Starts the fin slap attack.
+   */
   startFinSlap() {
     this.attackAnimation = "fin";
     this.currentAnimation = "";
@@ -195,6 +234,9 @@ class Character extends MovableObject {
     this.markAction();
   }
 
+  /**
+   * Starts the bubble attack animation.
+   */
   startBubbleAttack() {
     if (this.attackAnimation != "") return;
     this.attackAnimation = "bubble";
@@ -203,6 +245,9 @@ class Character extends MovableObject {
     this.markAction();
   }
 
+  /**
+   * Plays the correct character animation.
+   */
   playCharacterAnimation() {
     if (this.isDead()) {
       this.playNewAnimation("dead", this.IMAGES_DEAD);
@@ -213,6 +258,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Plays the animation while the character is alive.
+   */
   playLivingAnimation() {
     if (this.attackAnimation == "fin") {
       this.playNewAnimation("fin", this.IMAGES_FIN_SLAP);
@@ -227,6 +275,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Plays the sleep animation and sleep sound.
+   */
   playSleepAnimation() {
     if (!this.isSleepSoundActive) {
       this.world.audioManager.playSleepSound();
@@ -236,6 +287,11 @@ class Character extends MovableObject {
     this.playNewAnimation("sleep", this.IMAGES_LONG_IDLE);
   }
 
+  /**
+   * Plays an animation and resets it if needed.
+   * @param {string} animationName - The name of the animation.
+   * @param {string[]} images - The images of the animation.
+   */
   playNewAnimation(animationName, images) {
     this.resetAnimationIfNeeded(animationName);
 
@@ -244,6 +300,10 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Resets the animation when another animation starts.
+   * @param {string} animationName - The name of the animation.
+   */
   resetAnimationIfNeeded(animationName) {
     if (this.currentAnimation != animationName) {
       this.currentImage = 0;
@@ -252,11 +312,21 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Checks if the next animation frame can be played.
+   * @param {string} animationName - The name of the animation.
+   * @returns {boolean} True if the next frame can be played.
+   */
   canPlayNextFrame(animationName) {
     this.animationSpeed++;
     return this.animationSpeed >= this.getAnimationSpeed(animationName);
   }
 
+  /**
+   * Returns the speed for an animation.
+   * @param {string} animationName - The name of the animation.
+   * @returns {number} The animation speed.
+   */
   getAnimationSpeed(animationName) {
     if (animationName == "fin") return 1;
     if (animationName == "bubble") return 1;
@@ -267,6 +337,11 @@ class Character extends MovableObject {
     return 3;
   }
 
+  /**
+   * Plays one frame of an animation.
+   * @param {string} animationName - The name of the animation.
+   * @param {string[]} images - The images of the animation.
+   */
   playFrame(animationName, images) {
     this.animationSpeed = 0;
 
@@ -277,6 +352,10 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Plays one frame of an attack animation.
+   * @param {string[]} images - The images of the attack animation.
+   */
   playAttackAnimation(images) {
     if (this.currentImage < images.length) {
       let path = images[this.currentImage];
@@ -287,6 +366,9 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Finishes the current attack animation.
+   */
   finishAttack() {
     this.attackAnimation = "";
     this.currentAnimation = "";
@@ -294,6 +376,10 @@ class Character extends MovableObject {
     this.currentImage = 0;
   }
 
+  /**
+   * Checks if the character is moving.
+   * @returns {boolean} True if the character is moving.
+   */
   isMoving() {
     return (
       this.world.keyboard.RIGHT ||
@@ -303,17 +389,27 @@ class Character extends MovableObject {
     );
   }
 
+  /**
+   * Checks if the character should sleep.
+   * @returns {boolean} True if the character should sleep.
+   */
   isSleeping() {
     let timePassed = new Date().getTime() - this.lastActionTime;
     return timePassed > this.sleepTime;
   }
 
+  /**
+   * Moves the character upwards.
+   */
   flap() {
     this.speedY = 15;
     this.canFlap = false;
     this.markAction();
   }
 
+  /**
+   * Saves the last player action and stops the sleep sound.
+   */
   markAction() {
     this.lastActionTime = new Date().getTime();
     this.isSleepSoundActive = false;
@@ -323,18 +419,32 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Checks if the fin slap hits another object.
+   * @param {MovableObject} object - The object that should be checked.
+   * @returns {boolean} True if the fin slap hits the object.
+   */
   isFinSlapColliding(object) {
     let ownBox = this.getFinSlapBox();
     let otherBox = object.getCollisionBox();
     return this.checkBoxCollision(ownBox, otherBox);
   }
 
+  /**
+   * Returns the collision box of the fin slap attack.
+   * @returns {Object} The fin slap collision box.
+   */
   getFinSlapBox() {
     let box = this.getCollisionBox();
     let x = this.getFinSlapX(box);
     return this.createFinSlapBox(box, x);
   }
 
+  /**
+   * Returns the x position of the fin slap box.
+   * @param {Object} box - The character collision box.
+   * @returns {number} The x position of the fin slap box.
+   */
   getFinSlapX(box) {
     if (this.otherDirection) {
       return box.x - 90;
@@ -342,6 +452,12 @@ class Character extends MovableObject {
     return box.x + box.width - 10;
   }
 
+  /**
+   * Creates the fin slap collision box.
+   * @param {Object} box - The character collision box.
+   * @param {number} x - The x position of the fin slap box.
+   * @returns {Object} The fin slap collision box.
+   */
   createFinSlapBox(box, x) {
     return {
       x: x,

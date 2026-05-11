@@ -1,3 +1,8 @@
+/**
+ * Represents the final boss of the game.
+ * @class
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
   width = 450;
   height = 450;
@@ -41,6 +46,9 @@ class Endboss extends MovableObject {
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
   ];
 
+  /**
+   * Creates a new endboss.
+   */
   constructor() {
     super().loadImg(this.IMAGES_SWIMMING[0]);
     this.loadImages(this.IMAGES_SWIMMING);
@@ -48,6 +56,9 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the movement and animation intervals.
+   */
   animate() {
     setInterval(() => {
       this.moveBoss();
@@ -58,6 +69,9 @@ class Endboss extends MovableObject {
     }, 200);
   }
 
+  /**
+   * Activates the endboss.
+   */
   activate() {
     if (!this.isActivated) {
       this.isActivated = true;
@@ -65,12 +79,18 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Moves the boss when he is activated.
+   */
   moveBoss() {
     if (!this.isActivated || this.isKilled) return;
     this.floatUpAndDown();
     this.handleAttackMode();
   }
 
+  /**
+   * Moves the boss up and down.
+   */
   floatUpAndDown() {
     this.y += 1.1 * this.moveDirection;
 
@@ -79,20 +99,29 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Handles the current attack mode of the boss.
+   */
   handleAttackMode() {
     if (this.attackMode == "idle") this.waitBeforeAttack();
     if (this.attackMode == "attack") this.chargeAttack();
     if (this.attackMode == "return") this.returnToStart();
   }
 
+  /**
+   * Waits before the next boss attack starts.
+   */
   waitBeforeAttack() {
-    let timepassed = new Date().getTime() - this.lastAttack;
+    let timePassed = new Date().getTime() - this.lastAttack;
 
-    if (timepassed > this.getAttackPause()) {
+    if (timePassed > this.getAttackPause()) {
       this.attackMode = "attack";
     }
   }
 
+  /**
+   * Moves the boss forward during an attack.
+   */
   chargeAttack() {
     this.x -= this.getAttackSpeed();
 
@@ -101,6 +130,9 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Moves the boss back to the start position.
+   */
   returnToStart() {
     this.x += 4;
 
@@ -111,16 +143,27 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Returns the pause between boss attacks.
+   * @returns {number} The attack pause in milliseconds.
+   */
   getAttackPause() {
     if (this.energy <= 50) return 1100;
     return 1700;
   }
 
+  /**
+   * Returns the speed of the boss attack.
+   * @returns {number} The attack speed.
+   */
   getAttackSpeed() {
     if (this.energy <= 50) return 8;
     return 6;
   }
 
+  /**
+   * Plays the correct endboss animation.
+   */
   playEndbossAnimation() {
     if (this.isKilled) {
       this.playDeadAnimation();
@@ -129,12 +172,19 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Plays the dead animation of the boss.
+   */
   playDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
     this.y += 2;
     this.deadCounter++;
   }
 
+  /**
+   * Hits the boss with a poison bubble.
+   * @returns {boolean} True if the boss was hit.
+   */
   hitByPoisonBubble() {
     if (!this.canBeHit()) return false;
     this.energy -= 25;
@@ -143,11 +193,18 @@ class Endboss extends MovableObject {
     return true;
   }
 
+  /**
+   * Checks if the boss can be hit again.
+   * @returns {boolean} True if the boss can be hit.
+   */
   canBeHit() {
-    let timepassed = new Date().getTime() - this.lastHit;
-    return timepassed > this.hitCooldown;
+    let timePassed = new Date().getTime() - this.lastHit;
+    return timePassed > this.hitCooldown;
   }
 
+  /**
+   * Checks if the boss has no energy left.
+   */
   checkBossEnergy() {
     if (this.energy <= 0) {
       this.energy = 0;
@@ -155,6 +212,9 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Kills the boss.
+   */
   kill() {
     this.isKilled = true;
     this.currentImage = 0;

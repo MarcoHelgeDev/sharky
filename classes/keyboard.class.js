@@ -1,3 +1,7 @@
+/**
+ * Saves the current keyboard input of the player.
+ * @class
+ */
 class Keyboard {
   LEFT = false;
   RIGHT = false;

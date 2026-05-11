@@ -1,3 +1,8 @@
+/**
+ * Represents a pufferfish enemy.
+ * @class
+ * @extends MovableObject
+ */
 class Pufferfish extends MovableObject {
   height = 80;
   width = 80;
@@ -21,6 +26,11 @@ class Pufferfish extends MovableObject {
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 3 (can animate by going down to the floor after the Fin Slap attack).png",
   ];
 
+  /**
+   * Creates a new pufferfish.
+   * @param {number} x - The x position of the pufferfish.
+   * @param {number} y - The y position of the pufferfish.
+   */
   constructor(x, y) {
     super().loadImg(this.IMAGES_SWIMMING[0]);
     this.x = x;
@@ -30,6 +40,9 @@ class Pufferfish extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the movement and animation intervals.
+   */
   animate() {
     setInterval(() => {
       this.movePufferfish();
@@ -40,11 +53,17 @@ class Pufferfish extends MovableObject {
     }, 160);
   }
 
+  /**
+   * Moves the pufferfish to the left.
+   */
   movePufferfish() {
     if (this.isKilled) return;
     this.moveLeft();
   }
 
+  /**
+   * Plays the correct pufferfish animation.
+   */
   playPufferfishAnimation() {
     if (this.isKilled) {
       this.playDeadAnimation();
@@ -53,6 +72,9 @@ class Pufferfish extends MovableObject {
     }
   }
 
+  /**
+   * Plays the dead animation and moves the pufferfish upwards.
+   */
   playDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
     this.y -= 2;
@@ -62,6 +84,9 @@ class Pufferfish extends MovableObject {
     }
   }
 
+  /**
+   * Kills the pufferfish.
+   */
   kill() {
     this.isKilled = true;
     this.currentImage = 0;

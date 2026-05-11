@@ -1,3 +1,8 @@
+/**
+ * Represents a coin that can be collected by the character.
+ * @class
+ * @extends MovableObject
+ */
 class Coin extends MovableObject {
   height = 45;
   width = 45;
@@ -10,6 +15,11 @@ class Coin extends MovableObject {
     "img/4. Marcadores/1. Coins/4.png",
   ];
 
+  /**
+   * Creates a new coin.
+   * @param {number} x - The x position of the coin.
+   * @param {number} y - The y position of the coin.
+   */
   constructor(x, y) {
     super().loadImg(this.IMAGES[0]);
     this.x = x;
@@ -18,6 +28,9 @@ class Coin extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the coin animation.
+   */
   animate() {
     setInterval(() => {
       this.playAnimation(this.IMAGES);

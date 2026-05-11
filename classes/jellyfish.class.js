@@ -1,3 +1,8 @@
+/**
+ * Represents a jellyfish enemy.
+ * @class
+ * @extends MovableObject
+ */
 class Jellyfish extends MovableObject {
   height = 90;
   width = 90;
@@ -24,6 +29,11 @@ class Jellyfish extends MovableObject {
     "img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png",
   ];
 
+  /**
+   * Creates a new jellyfish.
+   * @param {number} x - The x position of the jellyfish.
+   * @param {number} y - The y position of the jellyfish.
+   */
   constructor(x, y) {
     super().loadImg(this.IMAGES_SWIMMING[0]);
     this.x = x;
@@ -33,6 +43,9 @@ class Jellyfish extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the movement and animation intervals.
+   */
   animate() {
     setInterval(() => {
       this.moveUpAndDown();
@@ -43,18 +56,27 @@ class Jellyfish extends MovableObject {
     }, 200);
   }
 
+  /**
+   * Moves the jellyfish up and down.
+   */
   moveUpAndDown() {
     if (this.isKilled) return;
     this.y += this.speed * this.moveDirection;
     this.changeDirectionAtBorder();
   }
 
+  /**
+   * Changes the movement direction at the top or bottom border.
+   */
   changeDirectionAtBorder() {
     if (this.y > this.bottomBorder || this.y < this.topBorder) {
       this.moveDirection *= -1;
     }
   }
 
+  /**
+   * Plays the correct jellyfish animation.
+   */
   playJellyfishAnimation() {
     if (this.isKilled) {
       this.playDeadAnimation();
@@ -63,6 +85,9 @@ class Jellyfish extends MovableObject {
     }
   }
 
+  /**
+   * Plays the dead animation and moves the jellyfish upwards.
+   */
   playDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
     this.y -= 3;
@@ -72,6 +97,9 @@ class Jellyfish extends MovableObject {
     }
   }
 
+  /**
+   * Kills the jellyfish.
+   */
   kill() {
     this.isKilled = true;
     this.currentImage = 0;
