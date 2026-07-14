@@ -127,29 +127,29 @@ body.fake-fullscreen .game-box.is-playing .touch-toggle-button {
   transform: translateX(78px);
 }
 
-/* Center control buttons in fake fullscreen mobile landscape */
+/* Keep menu buttons away from the touch controls in fake fullscreen */
 @media (max-width: 1024px) and (orientation: landscape) {
   body.fake-fullscreen .game-box.is-playing .mute-button {
     left: calc(50% - 79px);
     right: auto;
-    top: auto;
-    bottom: 14px;
+    top: 12px;
+    bottom: auto;
     transform: none;
   }
 
   body.fake-fullscreen .game-box.is-playing .fullscreen-button {
     left: calc(50% - 21px);
     right: auto;
-    top: auto;
-    bottom: 14px;
+    top: 12px;
+    bottom: auto;
     transform: none;
   }
 
   body.fake-fullscreen .game-box.is-playing .touch-toggle-button {
     left: calc(50% + 37px);
     right: auto;
-    top: auto;
-    bottom: 14px;
+    top: 12px;
+    bottom: auto;
     transform: none;
   }
 

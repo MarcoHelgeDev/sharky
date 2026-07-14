@@ -19,7 +19,7 @@ class Character extends MovableObject {
   sleepTime = 15000;
   lastFinSlap = 0;
   finSlapCooldown = 900;
-  offset = { top: 95, right: 55, bottom: 55, left: 45 };
+  offset = { top: 115, right: 55, bottom: 55, left: 45 };
 
   IMAGES_IDLE = [
     "img/1.Sharkie/1.IDLE/1.png",

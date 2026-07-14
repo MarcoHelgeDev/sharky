@@ -67,10 +67,12 @@
 
   .game-box {
     width: min(100vw, 150vh);
+    width: min(100vw, 150dvh);
     height: auto;
     aspect-ratio: 3 / 2;
     max-width: 100vw;
     max-height: 100vh;
+    max-height: 100dvh;
     border: none;
     border-radius: 0;
   }
@@ -380,29 +382,29 @@
   }
 }
 
-/* Center control buttons in mobile landscape */
+/* Keep menu buttons away from the touch controls on small screens */
 @media (max-width: 1024px) and (orientation: landscape) {
   .game-box.is-playing .mute-button {
     left: calc(50% - 79px);
     right: auto;
-    top: auto;
-    bottom: 14px;
+    top: 12px;
+    bottom: auto;
     transform: none;
   }
 
   .game-box.is-playing .fullscreen-button {
     left: calc(50% - 21px);
     right: auto;
-    top: auto;
-    bottom: 14px;
+    top: 12px;
+    bottom: auto;
     transform: none;
   }
 
   .game-box.is-playing .touch-toggle-button {
     left: calc(50% + 37px);
     right: auto;
-    top: auto;
-    bottom: 14px;
+    top: 12px;
+    bottom: auto;
     transform: none;
   }
 

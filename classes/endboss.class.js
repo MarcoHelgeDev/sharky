@@ -37,6 +37,13 @@ class Endboss extends MovableObject {
     "img/2.Enemy/3 Final Enemy/2.floating/13.png",
   ];
 
+  IMAGES_HURT = [
+    "img/2.Enemy/3 Final Enemy/Hurt/1.png",
+    "img/2.Enemy/3 Final Enemy/Hurt/2.png",
+    "img/2.Enemy/3 Final Enemy/Hurt/3.png",
+    "img/2.Enemy/3 Final Enemy/Hurt/4.png",
+  ];
+
   IMAGES_DEAD = [
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2.png",
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png",
@@ -52,6 +59,7 @@ class Endboss extends MovableObject {
   constructor() {
     super().loadImg(this.IMAGES_SWIMMING[0]);
     this.loadImages(this.IMAGES_SWIMMING);
+    this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
     this.animate();
   }
@@ -167,6 +175,8 @@ class Endboss extends MovableObject {
   playEndbossAnimation() {
     if (this.isKilled) {
       this.playDeadAnimation();
+    } else if (this.isHurt()) {
+      this.playAnimation(this.IMAGES_HURT);
     } else {
       this.playAnimation(this.IMAGES_SWIMMING);
     }
@@ -189,6 +199,7 @@ class Endboss extends MovableObject {
     if (!this.canBeHit()) return false;
     this.energy -= 25;
     this.lastHit = new Date().getTime();
+    this.currentImage = 0;
     this.checkBossEnergy();
     return true;
   }
