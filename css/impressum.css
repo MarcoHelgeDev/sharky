@@ -1,5 +1,6 @@
 .impressum-page {
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-y: auto;
   color: white;
   background:
@@ -52,6 +53,7 @@
   z-index: 1;
   width: min(840px, calc(100% - 32px));
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 auto;
   padding: 48px 0;
   display: flex;
@@ -96,6 +98,7 @@
   margin: 0;
   font-size: 19px;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .notice {
@@ -110,4 +113,17 @@
   display: inline-block;
   margin-bottom: 6px;
   font-size: 18px;
+}
+
+@media (max-height: 600px) {
+  .impressum-wrapper {
+    width: min(840px, calc(100% - 24px));
+    min-height: auto;
+    padding: 18px 0;
+    align-items: flex-start;
+  }
+
+  .impressum-card {
+    padding: 24px;
+  }
 }

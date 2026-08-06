@@ -11,6 +11,7 @@ class World {
   camera_x = 0;
   character;
   level;
+  collisionManager;
   throwableObjects = [];
   bossBubbles = [];
   statusBar = new Statusbar("life", 10, 0);
@@ -43,6 +44,7 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.level = createLevel();
     this.character = new Character();
+    this.collisionManager = new WorldCollision(this);
     this.setWorld();
     this.draw();
     this.run();
@@ -71,11 +73,11 @@ class World {
    */
   runGameChecks() {
     this.checkBossActivation();
-    this.checkFinSlapAttack();
-    this.checkCollisions();
+    this.collisionManager.checkFinSlapAttack();
+    this.collisionManager.checkCollisions();
     this.checkThrowObjects();
     this.checkBossBubbleAttack();
-    this.checkCollectables();
+    this.collisionManager.checkCollectables();
     this.removeObjects();
     this.checkGameEnd();
   }
@@ -153,29 +155,6 @@ class World {
   }
 
   /**
-   * Checks if the fin slap hits an enemy.
-   */
-  checkFinSlapAttack() {
-    if (!this.character.isFinSlapActive) return;
-    this.level.enemies.forEach((enemy) => {
-      this.hitEnemyWithFinSlap(enemy);
-    });
-  }
-
-  /**
-   * Hits one enemy with the fin slap attack.
-   * @param {MovableObject} enemy - The enemy that should be checked.
-   */
-  hitEnemyWithFinSlap(enemy) {
-    if (enemy instanceof Endboss) return;
-    if (enemy.isKilled || enemy.removeFromWorld) return;
-    if (this.character.isFinSlapColliding(enemy)) {
-      enemy.kill();
-      this.audioManager.playEnemyDeadSound();
-    }
-  }
-
-  /**
    * Checks if the boss should shoot a bubble.
    */
   checkBossBubbleAttack() {
@@ -214,200 +193,6 @@ class World {
     this.bossBubbles.push(bubble);
     this.lastBossBubble = new Date().getTime();
     this.audioManager.playBubbleSound();
-  }
-
-  /**
-   * Checks all enemy and bubble collisions.
-   */
-  checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
-      this.checkEnemyCollision(enemy);
-      this.checkBubbleCollision(enemy);
-    });
-    this.checkBossBubbleCollisions();
-  }
-
-  /**
-   * Checks if the character collides with an enemy.
-   * @param {MovableObject} enemy - The enemy that should be checked.
-   */
-  checkEnemyCollision(enemy) {
-    if (enemy.isKilled || enemy.removeFromWorld) return;
-    if (this.character.isColliding(enemy)) {
-      this.hitCharacter();
-    }
-  }
-
-  /**
-   * Hits the character and updates the health bar.
-   */
-  hitCharacter() {
-    let energyBeforeHit = this.character.energy;
-    this.character.hit();
-    this.statusBar.setPercentage(this.character.energy);
-    if (this.character.energy < energyBeforeHit) {
-      this.audioManager.playHurtSound();
-    }
-  }
-
-  /**
-   * Checks if a player bubble hits an enemy.
-   * @param {MovableObject} enemy - The enemy that should be checked.
-   */
-  checkBubbleCollision(enemy) {
-    this.throwableObjects.forEach((bubble) => {
-      this.hitEnemyWithBubble(enemy, bubble);
-    });
-  }
-
-  /**
-   * Hits one enemy with one bubble.
-   * @param {MovableObject} enemy - The enemy that should be hit.
-   * @param {ThrowableObject} bubble - The bubble that should hit the enemy.
-   */
-  hitEnemyWithBubble(enemy, bubble) {
-    if (enemy.isKilled || bubble.removeFromWorld) return;
-    if (bubble.isColliding(enemy)) {
-      this.damageEnemy(enemy, bubble);
-      bubble.removeFromWorld = true;
-    }
-  }
-
-  /**
-   * Damages an enemy depending on the enemy and bubble type.
-   * @param {MovableObject} enemy - The enemy that gets damage.
-   * @param {ThrowableObject} bubble - The bubble that hits the enemy.
-   */
-  damageEnemy(enemy, bubble) {
-    if (enemy instanceof Endboss && bubble.isPoisoned) {
-      this.hitEndboss(enemy);
-    } else if (!(enemy instanceof Endboss)) {
-      enemy.kill();
-      this.audioManager.playEnemyDeadSound();
-    }
-  }
-
-  /**
-   * Hits the endboss and updates the boss health bar.
-   * @param {Endboss} endboss - The endboss that should be hit.
-   */
-  hitEndboss(endboss) {
-    if (endboss.hitByPoisonBubble()) {
-      this.bossBar.setPercentage(endboss.energy);
-      this.playBossDamageSound(endboss);
-    }
-  }
-
-  /**
-   * Plays the correct sound after boss damage.
-   * @param {Endboss} endboss - The endboss that was hit.
-   */
-  playBossDamageSound(endboss) {
-    if (endboss.isKilled) return this.audioManager.playEnemyDeadSound();
-    this.audioManager.playBossHitSound();
-  }
-
-  /**
-   * Checks if a boss bubble hits the character.
-   */
-  checkBossBubbleCollisions() {
-    this.bossBubbles.forEach((bubble) => {
-      this.hitCharacterWithBossBubble(bubble);
-    });
-  }
-
-  /**
-   * Hits the character with a boss bubble.
-   * @param {BossBubble} bubble - The boss bubble that should be checked.
-   */
-  hitCharacterWithBossBubble(bubble) {
-    if (bubble.removeFromWorld) return;
-    if (this.character.isColliding(bubble)) {
-      this.hitCharacter();
-      bubble.removeFromWorld = true;
-    }
-  }
-
-  /**
-   * Checks all collectable collisions.
-   */
-  checkCollectables() {
-    this.checkCoinCollisions();
-    this.checkPoisonCollisions();
-  }
-
-  /**
-   * Checks if the character collects coins.
-   */
-  checkCoinCollisions() {
-    this.level.coins.forEach((coin) => {
-      if (this.character.isColliding(coin)) {
-        this.collectCoin(coin);
-      }
-    });
-  }
-
-  /**
-   * Collects one coin and updates the coin bar.
-   * @param {Coin} coin - The coin that should be collected.
-   */
-  collectCoin(coin) {
-    coin.removeFromWorld = true;
-    this.collectedCoins += 10;
-    this.checkCoinAmount();
-    this.coinBar.setPercentage(this.collectedCoins);
-    this.audioManager.playCoinSound();
-  }
-
-  /**
-   * Keeps the coin amount at a maximum of 100.
-   */
-  checkCoinAmount() {
-    if (this.collectedCoins > 100) {
-      this.collectedCoins = 100;
-    }
-  }
-
-  /**
-   * Checks if the character collects poison bottles.
-   */
-  checkPoisonCollisions() {
-    this.level.poisonBottles.forEach((bottle) => {
-      if (this.character.isColliding(bottle)) {
-        this.collectPoison(bottle);
-      }
-    });
-  }
-
-  /**
-   * Collects one poison bottle and updates the poison bar.
-   * @param {PoisonBottle} bottle - The poison bottle that should be collected.
-   */
-  collectPoison(bottle) {
-    bottle.removeFromWorld = true;
-    this.collectedPoison += 20;
-    this.checkPoisonAmount();
-    this.poisonBar.setPercentage(this.collectedPoison);
-    this.audioManager.playPoisonSound();
-  }
-
-  /**
-   * Keeps the poison amount at a maximum of 100.
-   */
-  checkPoisonAmount() {
-    if (this.collectedPoison >= 100) {
-      this.collectedPoison = 100;
-      this.unlockPoisonBubble();
-    }
-  }
-
-  /**
-   * Unlocks poison bubbles.
-   */
-  unlockPoisonBubble() {
-    if (this.isPoisonUnlocked) return;
-    this.isPoisonUnlocked = true;
-    this.audioManager.playPowerReadySound();
   }
 
   /**
